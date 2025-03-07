@@ -1,6 +1,18 @@
 import tkinter as tk
 from tkinter import ttk
 import pygame as pg
+import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
+if not API_KEY:
+    raise Exception("API_KEY env variable not found!")
+
+url = f"https://v6.exchangerate-api.com/v6/{API_KEY}/latest/EUR"
+
 pg.init()
 
 translations = {
@@ -15,7 +27,9 @@ class CurrencyConverter:
         self.root.title("Currency Converter")
         self.root.geometry("300x300")
 
-        self.rates = {"USD": 1, "Euro": 0.96, "Yen": 150.55, "ITL": 1847.12, "GBP": 0.79}
+        response = requests.request("GET", url)     # TODO: refreshing in background
+        self.rates = response.json()["conversion_rates"]
+
         self.language = "en" 
 
         self.lang_label = tk.Label(root, text="Language")
@@ -59,7 +73,7 @@ class CurrencyConverter:
     
     def on_click(self):
         try:
-            fart = pg.mixer.Sound(r"sfx\fart.mp3")
+            fart = pg.mixer.Sound(r".\sfx\fart.mp3")
             amount = float(self.entry.get())
             from_curr = self.from_currency.get()
             to_curr = self.to_currency.get()
@@ -67,7 +81,7 @@ class CurrencyConverter:
             fart.play()
             self.result_label.config(text=f"{translations[self.language]["Converted:"]} {result:.2f} {to_curr}")
         except ValueError:
-            buzzer = pg.mixer.Sound(r"sfx\buzzer.mp3")
+            buzzer = pg.mixer.Sound(r".\sfx\buzzer.mp3")
             self.result_label.config(text=translations[self.language]["Invalid input"])
             buzzer.play()
 
