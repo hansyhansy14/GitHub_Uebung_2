@@ -19,7 +19,7 @@ translations = {
     "en": {"Language": "Language","Enter amount:": "Enter amount:", "From:": "From:", "To:": "To:", "Convert": "Convert", "Invalid input": "Invalid input", "Converted:": "Converted:"},
     "de": {"Language":"Sprache","Enter amount:": "Betrag eingeben:", "From:": "Von:", "To:": "Nach:", "Convert": "Umrechnen", "Invalid input": "Ungültige Eingabe", "Converted:": "Umgewandelt:"},
     "it": {"Language":"Lingua","Enter amount:": "Inserisci l'importo:", "From:": "Da:", "To:": "A:", "Convert": "Convertire", "Invalid input": "Input non valido", "Converted:": "Convertito:"}
-}
+} # comment
 
 class CurrencyConverter:
     def __init__(self, root):
