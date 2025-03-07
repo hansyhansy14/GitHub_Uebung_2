@@ -59,7 +59,7 @@ class CurrencyConverter:
     
     def on_click(self):
         try:
-            fart = pg.mixer.Sound(r"D:\1_HTL\3aHEL\3a_FSST_Labor\6_GitHubTeil2\sfx\fart.mp3")
+            fart = pg.mixer.Sound(r".\sfx\fart.mp3")
             amount = float(self.entry.get())
             from_curr = self.from_currency.get()
             to_curr = self.to_currency.get()
@@ -67,7 +67,7 @@ class CurrencyConverter:
             fart.play()
             self.result_label.config(text=f"{translations[self.language]["Converted:"]} {result:.2f} {to_curr}")
         except ValueError:
-            buzzer = pg.mixer.Sound(r"D:\1_HTL\3aHEL\3a_FSST_Labor\6_GitHubTeil2\sfx\buzzer.mp3")
+            buzzer = pg.mixer.Sound(r".\sfx\buzzer.mp3")
             self.result_label.config(text=translations[self.language]["Invalid input"])
             buzzer.play()
 
