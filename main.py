@@ -1,6 +1,18 @@
 import tkinter as tk
 from tkinter import ttk
 import pygame as pg
+import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
+if not API_KEY:
+    raise Exception("API_KEY env variable not found!")
+
+url = f"https://v6.exchangerate-api.com/v6/{API_KEY}/latest/EUR"
+
 pg.init()
 
 translations = {
@@ -15,7 +27,9 @@ class CurrencyConverter:
         self.root.title("Currency Converter")
         self.root.geometry("300x300")
 
-        self.rates = {"USD": 1, "Euro": 0.96, "Yen": 150.55, "ITL": 1847.12, "GBP": 0.79}
+        response = requests.request("GET", url)     # TODO: refreshing in background
+        self.rates = response.json()["conversion_rates"]
+
         self.language = "en" 
 
         self.lang_label = tk.Label(root, text="Language")
